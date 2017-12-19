@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["dom", "es2017", "dom.iterable"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": false,
+    "target": "es2017",
+    "noFallthroughCasesInSwitch": true,
+    "strict": true
+  },
+  "include": ["lib/**/*.ts"]
+}
