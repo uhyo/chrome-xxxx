@@ -52,13 +52,11 @@ function isEndOf(range: Range, target: HTMLElement): boolean {
     if (!range.collapsed) {
         return false;
     }
+    target.normalize();
     const tr = new Range() as Range & IRangeExt;
     tr.selectNodeContents(target);
     // Represent Range as a point.
     let node = range.endContainer;
-    if (node.nodeType === Node.TEXT_NODE) {
-        node.normalize();
-    }
     let offset = range.endOffset;
     // check that point is in Target.
     if (!tr.isPointInRange(node, offset)) {
@@ -66,20 +64,23 @@ function isEndOf(range: Range, target: HTMLElement): boolean {
     }
     // move upwards as much as possible.
     while (node !== target){
-        console.log(node, offset, node.childNodes.length, node.childNodes[2]);
         if (!atEnd(node, offset)){
             return false;
         }
         [node, offset] = moveUp(node, offset);
     }
-    console.log('result', node, offset);
     return atEnd(node, offset);
 
 }
 // it is at the end.
 function atEnd(node: Node, offset: number): boolean {
     if (node.nodeType === Node.TEXT_NODE){
-        return node.nodeValue!.length === offset;
+        const ep = node.nodeValue!.search(/[\r\n]+$/);
+        if (ep >= 0) {
+            (node as any).splitText(ep).remove();
+            offset = node.nodeValue!.length;
+        }
+        return node.nodeValue!.length <= offset;
     } else {
         const children = node.childNodes;
         // Some sites has excess empty text node.
@@ -109,7 +110,7 @@ function getIndex(parent: Node, child: Node): number {
  */
 function isEmpty(node: Node): boolean {
     if (node.nodeType === Node.TEXT_NODE) {
-        return node.nodeValue === '';
+        return /^[\r\n]*$/.test(node.nodeValue!);
     } else if (node.nodeName === 'BR') {
         return true;
     }
