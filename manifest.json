@@ -2,7 +2,8 @@
   "manifest_version": 2,
   "name": "Easy ████ing",
   "version": "0.1.0",
-  "description": "Shift+右キーで█を入力できるようになる拡張機能です。",
+  "description":
+    "入力欄の終端でShift+右キーで█を入力できるようになる拡張機能です。",
   "author": "uhyo",
   "icons": {
     "48": "icons/48x48.png"
