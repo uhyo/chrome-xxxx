@@ -56,6 +56,9 @@ function isEndOf(range: Range, target: HTMLElement): boolean {
     tr.selectNodeContents(target);
     // Represent Range as a point.
     let node = range.endContainer;
+    if (node.nodeType === Node.TEXT_NODE) {
+        node.normalize();
+    }
     let offset = range.endOffset;
     // check that point is in Target.
     if (!tr.isPointInRange(node, offset)) {
@@ -63,7 +66,7 @@ function isEndOf(range: Range, target: HTMLElement): boolean {
     }
     // move upwards as much as possible.
     while (node !== target){
-        console.log(node, offset);
+        console.log(node, offset, node.childNodes.length, node.childNodes[2]);
         if (!atEnd(node, offset)){
             return false;
         }
@@ -78,7 +81,14 @@ function atEnd(node: Node, offset: number): boolean {
     if (node.nodeType === Node.TEXT_NODE){
         return node.nodeValue!.length === offset;
     } else {
-        return node.childNodes.length === offset;
+        const children = node.childNodes;
+        // Some sites has excess empty text node.
+        for (const l = children.length; offset < l; offset++) {
+            if (!isEmpty(children[offset])) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 // move one step up.
@@ -92,6 +102,18 @@ function moveUp(node: Node, offset: number): [Node, number] {
 // index of nodes.
 function getIndex(parent: Node, child: Node): number {
     return [].indexOf.call(parent.childNodes, child);
+}
+
+/**
+ * Check whether given node is empty in our sense.
+ */
+function isEmpty(node: Node): boolean {
+    if (node.nodeType === Node.TEXT_NODE) {
+        return node.nodeValue === '';
+    } else if (node.nodeName === 'BR') {
+        return true;
+    }
+    return false;
 }
 
 /**
