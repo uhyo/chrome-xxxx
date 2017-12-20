@@ -1,9 +1,12 @@
+import {
+    handleInput,
+} from './input';
 /**
- * Input event handler.
+ * Keydown event handler.
  */
-const handler = (e: Event)=> {
+const handler = (e: KeyboardEvent)=> {
     const ta = e.target as HTMLInputElement | HTMLTextAreaElement;
-    console.log(ta);
+    handleInput(e, ta);
 };
 
 let state = false;
@@ -14,7 +17,7 @@ let state = false;
 export function enable() {
     if (!state) {
         state = true;
-        document.addEventListener('input', handler);
+        document.addEventListener('keydown', handler);
     }
 }
 
@@ -24,7 +27,7 @@ export function enable() {
 export function disable(){
     if (state){
         state = false;
-        document.removeEventListener('input', handler);
+        document.removeEventListener('keydown', handler);
     }
 }
 

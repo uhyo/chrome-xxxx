@@ -4,3 +4,4 @@ coverage
 # Distribution files
 dist/
 dist-es2015/
+/chrome-extension

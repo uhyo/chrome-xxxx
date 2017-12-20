@@ -1,6 +1,6 @@
 {
   "name": "chrome-xxxx",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Chrome extension for black block",
   "homepage": "",
   "author": {
@@ -42,7 +42,9 @@
   "scripts": {
     "prepublish": "nsp check",
     "test": "jest",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "package":
+      "mkdir -p chrome-extension/app/icons && cp -r manifest.json js dist chrome-extension/app/ && cp icons/*.png chrome-extension/app/icons/ && cd chrome-extension/app && zip -r ../app.zip ."
   },
   "repository": "uhyo/chrome-xxxx",
   "license": "MIT",

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Easy ████ing",
+  "version": "0.1.0",
+  "description": "Shift+右キーで█を入力できるようになる拡張機能です。",
+  "author": "uhyo",
+  "icons": {
+    "48": "icons/48x48.png"
+  },
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/bundle.js", "js/content.js"]
+    }
+  ]
+}
