@@ -1,27 +1,26 @@
-# chrome-xxxx [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Chrome extension for black block
+# chrome-xxxx
 
-## Installation
+<!-- [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] -->
 
-```sh
-$ npm install --save chrome-xxxx
-```
+This is a Chrome Extension which supports inputing the █ symbol.
 
-## Usage
+Chrome web store: https://chrome.google.com/webstore/detail/easy-%E2%96%88%E2%96%88%E2%96%88%E2%96%88ing/boohjpnhpempgagincffdolllgjeohci
 
-```js
-const chromeXxxx = require('chrome-xxxx');
+## Development
+The following gulp tasks are useful:
 
-chromeXxxx('Rainbow');
-```
+- **default**: compile the TypeScript source codes, lint them and bundle them into a single JavaScript file.
+- **watch**: watch the source codes.
+
+These tasks minimise the result when the `NODE_ENV` environment variable is set to `production`.
+
+The following npm script is also useful:
+
+- **package**: pack generated files and other items into `chrome-extension/app` directory and zip it into `chrome-extension/app.zip`. This directory should be able to be loaded into Chrome.
+
+## Contributors
+Be the first contributor!
+
 ## License
 
 MIT © [uhyo]()
-
-
-[npm-image]: https://badge.fury.io/js/chrome-xxxx.svg
-[npm-url]: https://npmjs.org/package/chrome-xxxx
-[travis-image]: https://travis-ci.org/uhyo/chrome-xxxx.svg?branch=master
-[travis-url]: https://travis-ci.org/uhyo/chrome-xxxx
-[daviddm-image]: https://david-dm.org/uhyo/chrome-xxxx.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/uhyo/chrome-xxxx
