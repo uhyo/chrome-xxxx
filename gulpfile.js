@@ -66,9 +66,11 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
       input: path.join(TS_DIST_LIB, 'index.js'),
       cache: rollupCache,
       // outputOptions
-      format: 'umd',
-      name: BUNDLE_MODULE_NAME,
-      sourcemap: 'inline',
+      output: {
+        format: 'umd',
+        name: BUNDLE_MODULE_NAME,
+        sourcemap: 'inline',
+      },
       // rollup-stream specific
       rollup,
     })
