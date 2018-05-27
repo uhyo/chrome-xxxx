@@ -1,4 +1,4 @@
-import { KeyConfigTable, KeyListener } from 'key-config';
+import { KeyConfigTable, KeyListener } from 'my-key-config';
 import { handleInput } from './input';
 import { initStore, spec } from './options';
 /**

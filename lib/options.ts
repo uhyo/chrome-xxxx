@@ -3,7 +3,12 @@ import {
     KeyConfigSpec,
     LocalStorageStore,
     register,
-} from 'key-config';
+} from 'my-key-config';
+
+/**
+ * Whether the `chrome` environment exists.
+ */
+const isChrome = 'undefined' !== typeof chrome;
 
 /**
  * Initialize the chrome extension page.
@@ -21,7 +26,9 @@ export const spec: KeyConfigSpec = [
             shiftKey: true,
         },
         id: 'insert-last',
-        name: chrome.i18n.getMessage('insert_last'),
+        name: isChrome
+            ? chrome.i18n.getMessage('insert_last')
+            : '█を入力（入力欄の終端のみ）',
     },
     {
         default: {
@@ -30,7 +37,7 @@ export const spec: KeyConfigSpec = [
             shiftKey: true,
         },
         id: 'insert-anywhere',
-        name: chrome.i18n.getMessage('insert_anywhere'),
+        name: isChrome ? chrome.i18n.getMessage('insert_anywhere') : '█を入力',
     },
 ];
 
@@ -38,7 +45,7 @@ export const spec: KeyConfigSpec = [
  * Initialize a store.
  */
 export function initStore(): LocalStorageStore | ChromeStorageStore {
-    if ('undefined' !== typeof chrome) {
+    if (isChrome) {
         // If chrome extension environment is enabled, use
         // chrome.sync store.
         return new ChromeStorageStore('chrome-xxxx');

@@ -1,6 +1,6 @@
 {
   "name": "chrome-xxxx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Chrome extension for black block",
   "homepage": "",
   "author": {
@@ -55,6 +55,6 @@
     "*.json": ["prettier --write", "git add"]
   },
   "dependencies": {
-    "key-config": "github:uhyo/key-config"
+    "my-key-config": "^0.1.1"
   }
 }
