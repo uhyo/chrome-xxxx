@@ -8,7 +8,7 @@ import {
 /**
  * Whether the `chrome` environment exists.
  */
-const isChrome = 'undefined' !== typeof chrome;
+const isChrome = 'undefined' !== typeof chrome && chrome.i18n != null;
 
 /**
  * Initialize the chrome extension page.
