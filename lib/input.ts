@@ -1,38 +1,39 @@
-import {
-    genChar,
-} from './char';
+import { genChar } from './char';
 
 /**
  * Handle input event to an input area.
  */
-export function handleInput(e: KeyboardEvent, target: HTMLElement) {
-    // Check if it is Shift+Right
-    if (e.key === 'ArrowRight' && e.shiftKey) {
-        if (isTextArea(target)){
-            const {
-                selectionStart,
-                selectionEnd,
-                value,
-            } = target;
-            if (selectionStart === selectionEnd && selectionEnd === value.length) {
-                // It's at the right end.
-                const ch = genChar();
-                setRangeText(target, ch, selectionEnd, selectionEnd, 'end');
-
+export function handleInput(
+    command: 'insert-last' | 'insert-anywhere',
+    target: HTMLElement,
+) {
+    if (isTextArea(target)) {
+        const { selectionStart, selectionEnd, value } = target;
+        if (
+            selectionStart != null &&
+            (command === 'insert-anywhere' ||
+                (selectionStart === selectionEnd &&
+                    selectionEnd === value.length))
+        ) {
+            const ch = genChar();
+            setRangeText(target, ch, selectionStart!, selectionEnd!, 'end');
+        }
+    } else if (target.contentEditable) {
+        // ContentEdiable HTML node
+        const sel = window.getSelection();
+        const range = sel.getRangeAt(0);
+        if (range == null) {
+            return;
+        }
+        if (command === 'insert-anywhere' || isEndOf(range, target)) {
+            // insert a text.
+            const text = document.createTextNode(genChar());
+            if (command === 'insert-anywhere') {
+                range.deleteContents();
             }
-        } else if (target.contentEditable) {
-            // ContentEdiable HTML node
-            const sel = window.getSelection();
-            const range = sel.getRangeAt(0);
-            if (range == null) {
-                return;
-            }
-            if (isEndOf(range, target)) {
-                // insert a text.
-                const text = document.createTextNode(genChar());
-                range.insertNode(text);
-                range.collapse(false);
-            }
+            range.insertNode(text);
+            // Move cursor to the end.
+            range.collapse(false);
         }
     }
 }
@@ -40,9 +41,14 @@ export function handleInput(e: KeyboardEvent, target: HTMLElement) {
 /**
  * Detect a text area.
  */
-function isTextArea(elm: HTMLElement): elm is HTMLInputElement | HTMLTextAreaElement {
-    return (elm.tagName === 'TEXTAREA') ||
-        (elm.tagName === 'INPUT' && 'number' === typeof (elm as HTMLInputElement).selectionStart );
+function isTextArea(
+    elm: HTMLElement,
+): elm is HTMLInputElement | HTMLTextAreaElement {
+    return (
+        elm.tagName === 'TEXTAREA' ||
+        (elm.tagName === 'INPUT' &&
+            'number' === typeof (elm as HTMLInputElement).selectionStart)
+    );
 }
 
 /**
@@ -63,18 +69,17 @@ function isEndOf(range: Range, target: HTMLElement): boolean {
         return false;
     }
     // move upwards as much as possible.
-    while (node !== target){
-        if (!atEnd(node, offset)){
+    while (node !== target) {
+        if (!atEnd(node, offset)) {
             return false;
         }
         [node, offset] = moveUp(node, offset);
     }
     return atEnd(node, offset);
-
 }
 // it is at the end.
 function atEnd(node: Node, offset: number): boolean {
-    if (node.nodeType === Node.TEXT_NODE){
+    if (node.nodeType === Node.TEXT_NODE) {
         const ep = node.nodeValue!.search(/[\r\n]+$/);
         if (ep >= 0) {
             (node as any).splitText(ep).remove();
@@ -98,7 +103,7 @@ function moveUp(node: Node, offset: number): [Node, number] {
     if (p == null) {
         throw new Error('Parent node does not exist');
     }
-    return [p, getIndex(p, node)+1];
+    return [p, getIndex(p, node) + 1];
 }
 // index of nodes.
 function getIndex(parent: Node, child: Node): number {
@@ -125,7 +130,8 @@ function setRangeText(
     replacement: string,
     start?: number,
     end?: number,
-    selectionMode?: string): void {
+    selectionMode?: string,
+): void {
     (target as any).setRangeText(replacement, start, end, selectionMode);
 }
 

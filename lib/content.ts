@@ -1,13 +1,22 @@
-import {
-    handleInput,
-} from './input';
+import { KeyConfigTable, KeyListener } from 'key-config';
+import { handleInput } from './input';
+import { initStore, spec } from './options';
 /**
  * Keydown event handler.
  */
-const handler = (e: KeyboardEvent)=> {
-    const ta = e.target as HTMLInputElement | HTMLTextAreaElement;
-    handleInput(e, ta);
+const handler = (e: any) => {
+    const ta = document.activeElement as HTMLElement | null;
+    if (ta == null) {
+        return;
+    }
+    const shortcut = e.detail;
+    handleInput(shortcut, ta);
 };
+
+const store = initStore();
+// Initialize a key listener,
+const listener = new KeyListener(store, spec);
+listener.addEventListener('key', handler);
 
 let state = false;
 
@@ -17,17 +26,17 @@ let state = false;
 export function enable() {
     if (!state) {
         state = true;
-        document.addEventListener('keydown', handler);
+        listener.listen();
     }
 }
 
 /**
  * Disable extension.
  */
-export function disable(){
-    if (state){
+export function disable() {
+    if (state) {
         state = false;
-        document.removeEventListener('keydown', handler);
+        listener.unlisten();
     }
 }
 

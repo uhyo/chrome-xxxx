@@ -1,4 +1,9 @@
-import { ChromeStorageStore, KeyConfigSpec, register } from 'key-config';
+import {
+    ChromeStorageStore,
+    KeyConfigSpec,
+    LocalStorageStore,
+    register,
+} from 'key-config';
 
 /**
  * Initialize the chrome extension page.
@@ -29,7 +34,16 @@ export const spec: KeyConfigSpec = [
     },
 ];
 
-// Initialize a store.
-export function initStore(): ChromeStorageStore {
-    return new ChromeStorageStore('chrome-xxxx');
+/**
+ * Initialize a store.
+ */
+export function initStore(): LocalStorageStore | ChromeStorageStore {
+    if ('undefined' !== typeof chrome) {
+        // If chrome extension environment is enabled, use
+        // chrome.sync store.
+        return new ChromeStorageStore('chrome-xxxx');
+    } else {
+        // Otherwise fall back to localStorage.
+        return new LocalStorageStore('chrome-xxxx');
+    }
 }
