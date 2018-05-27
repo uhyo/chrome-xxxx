@@ -10,6 +10,7 @@ const typescript = require('typescript');
 // Rollup
 const rollup = require('rollup');
 const rollupStream = require('rollup-stream');
+const rollupNode = require('rollup-plugin-node-resolve');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const uglifyComposer = require('gulp-uglify/composer');
@@ -71,6 +72,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
         name: BUNDLE_MODULE_NAME,
         sourcemap: 'inline',
       },
+      plugins: [rollupNode()],
       // rollup-stream specific
       rollup,
     })

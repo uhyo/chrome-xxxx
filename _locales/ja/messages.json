@@ -1,0 +1,17 @@
+{
+  "description": {
+    "message":
+      "テキスト入力時に█を入力できるショートカットキーを追加する拡張機能です。",
+    "description": "拡張機能の説明"
+  },
+  "press_key_label": {
+    "message": "キーを入力してください",
+    "description": "設定ページで新しいショートカットキーの入力を促すメッセージ"
+  },
+  "insert_last": {
+    "message": "█を入力（入力欄の終端のみ）"
+  },
+  "insert_anywhere": {
+    "message": "█を入力"
+  }
+}

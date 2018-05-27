@@ -1,7 +1,4 @@
-import {
-    enable,
-} from './content';
+import { enable } from './content';
+import * as options from './options';
 
-export {
-    enable,
-};
+export { enable, options };

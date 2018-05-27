@@ -14,7 +14,7 @@
   "devDependencies": {
     "@types/jest": "^22.2.3",
     "del": "^3.0.0",
-    "eslint-config-xo": "^0.22.1",
+    "eslint-config-xo": "^0.22.2",
     "gulp": "^3.9.1",
     "gulp-changed": "^3.2.0",
     "gulp-sourcemaps": "^2.6.4",
@@ -22,14 +22,15 @@
     "gulp-typescript": "^4.0.2",
     "gulp-uglify": "^3.0.0",
     "husky": "^0.14.3",
-    "jest": "^22.4.3",
-    "jest-cli": "^22.4.3",
-    "lint-staged": "^7.0.5",
+    "jest": "^23.0.0",
+    "jest-cli": "^23.0.0",
+    "lint-staged": "^7.1.2",
     "nsp": "^3.2.1",
     "prettier": "^1.12.1",
-    "rollup": "^0.58.2",
+    "rollup": "^0.59.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-stream": "^1.23.1",
-    "ts-jest": "^22.4.5",
+    "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3",
     "uglify-es": "^3.3.10",
@@ -44,7 +45,7 @@
     "test": "jest",
     "precommit": "lint-staged",
     "package":
-      "mkdir -p chrome-extension/app/icons && cp -r manifest.json js dist chrome-extension/app/ && cp icons/*.png chrome-extension/app/icons/ && cd chrome-extension/app && zip -r ../app.zip ."
+      "mkdir -p chrome-extension/app/icons && cp -r manifest.json js dist html _locales chrome-extension/app/ && cp icons/*.png chrome-extension/app/icons/ && cd chrome-extension/app && zip -r ../app.zip ."
   },
   "repository": "uhyo/chrome-xxxx",
   "license": "MIT",
@@ -52,5 +53,8 @@
     "*.ts": ["tslint --fix", "git add"],
     "*.tsx": ["tslint --fix", "git add"],
     "*.json": ["prettier --write", "git add"]
+  },
+  "dependencies": {
+    "key-config": "github:uhyo/key-config"
   }
 }

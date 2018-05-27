@@ -1,0 +1,16 @@
+{
+  "description": {
+    "message":
+      "A Chrome extension which adds keyboard shortcuts for inserting █.",
+    "description": "Description of this extension"
+  },
+  "press_key_label": {
+    "message": "Press a new keyboard shortcut"
+  },
+  "insert_last": {
+    "message": "Insert █ (only at the end of a text field)"
+  },
+  "insert_anywhere": {
+    "message": "Insert █"
+  }
+}
