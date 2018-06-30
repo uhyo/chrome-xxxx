@@ -19,5 +19,10 @@
     "page": "html/options.html",
     "open_in_tab": false
   },
-  "default_locale": "ja"
+  "default_locale": "ja",
+  "applications": {
+    "gecko": {
+      "id": "easy-xxxxing@uhyohyo.net"
+    }
+  }
 }
