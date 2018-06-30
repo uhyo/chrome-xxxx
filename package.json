@@ -44,6 +44,7 @@
     "prepublish": "nsp check",
     "test": "jest",
     "precommit": "lint-staged",
+    "production-build": "NODE_ENV=production gulp default",
     "package":
       "mkdir -p chrome-extension/app/icons && cp -r manifest.json js dist html _locales chrome-extension/app/ && cp icons/*.png chrome-extension/app/icons/ && cd chrome-extension/app && zip -r ../app.zip ."
   },

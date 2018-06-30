@@ -1,8 +1,8 @@
-# chrome-xxxx
+# easy ████ing
 
 <!-- [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] -->
 
-This is a Chrome Extension which supports inputing the █ symbol.
+This is a Chrome/Firefox extension which supports inputing the █ symbol.
 
 Chrome web store: https://chrome.google.com/webstore/detail/easy-%E2%96%88%E2%96%88%E2%96%88%E2%96%88ing/boohjpnhpempgagincffdolllgjeohci
 
