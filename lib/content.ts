@@ -16,8 +16,8 @@ const handler = (e: any) => {
 const store = initStore();
 // Initialize a key listener,
 const listener = new KeyListener(store, spec);
-listener.addEventListener('key', handler);
-
+// listener.addEventListener('key', handler);
+listener.onkey = handler;
 let state = false;
 
 /**
@@ -26,7 +26,9 @@ let state = false;
 export function enable() {
     if (!state) {
         state = true;
-        listener.listen();
+        listener.listen().catch((err: any) => {
+            console.error(err);
+        });
     }
 }
 
