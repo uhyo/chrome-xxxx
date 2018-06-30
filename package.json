@@ -1,7 +1,7 @@
 {
   "name": "chrome-xxxx",
-  "version": "0.2.0",
-  "description": "Chrome extension for black block",
+  "version": "0.2.1",
+  "description": "Extension for black block",
   "homepage": "",
   "author": {
     "name": "uhyo",

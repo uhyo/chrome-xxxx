@@ -1,7 +1,6 @@
 {
   "description": {
-    "message":
-      "A Chrome extension which adds keyboard shortcuts for inserting █.",
+    "message": "An extension which adds keyboard shortcuts for inserting █.",
     "description": "Description of this extension"
   },
   "press_key_label": {
