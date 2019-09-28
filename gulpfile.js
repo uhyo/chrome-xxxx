@@ -2,7 +2,6 @@
 const path = require('path');
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
-const gulpChanged = require('gulp-changed');
 // TypeScript
 const gulpTS = require('gulp-typescript');
 const gulpTSlint = require('gulp-tslint');
@@ -91,7 +90,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
   gulp.task('bundle', gulp.series('tsc', ()=>{
     return runRollup();
   }));
-  gulp.task('watch-bundle', gulp.series('bundle', ()=>{
+  gulp.task('watch-bundle', gulp.series('bundle-main', ()=>{
     gulp.watch(path.join(TS_DIST_LIB, '**', '*.js'), ['bundle-main']);
   }));
 }
