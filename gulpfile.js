@@ -43,7 +43,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
     }
   });
   gulp.task('watch-tsc', gulp.series('tsc', ()=>{
-    gulp.watch(path.join(LIB_DIR, '**', '*.ts{,x}'), ['tsc']);
+    gulp.watch(path.join(LIB_DIR, '**', '*.ts{,x}'), gulp.task('tsc'));
   }));
   gulp.task('tslint', ()=>{
     return gulp.src(path.join(LIB_DIR, '**', '*.ts{,x}'))
@@ -55,7 +55,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
     }));
   });
   gulp.task('watch-tslint', gulp.series('tslint', ()=>{
-    gulp.watch(path.join(LIB_DIR, '**', '*.ts{,x}'), ['tslint']);
+    gulp.watch(path.join(LIB_DIR, '**', '*.ts{,x}'), gulp.task('tslint'));
   }));
 }
 {
@@ -91,7 +91,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
     return runRollup();
   }));
   gulp.task('watch-bundle', gulp.series('bundle-main', ()=>{
-    gulp.watch(path.join(TS_DIST_LIB, '**', '*.js'), ['bundle-main']);
+    gulp.watch(path.join(TS_DIST_LIB, '**', '*.js'), gulp.task('bundle-main'));
   }));
 }
 {

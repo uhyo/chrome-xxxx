@@ -21,6 +21,9 @@ export function handleInput(
     } else if (target.contentEditable) {
         // ContentEdiable HTML node
         const sel = window.getSelection();
+        if (sel == null) {
+            return;
+        }
         const range = sel.getRangeAt(0);
         if (range == null) {
             return;
@@ -107,7 +110,7 @@ function moveUp(node: Node, offset: number): [Node, number] {
 }
 // index of nodes.
 function getIndex(parent: Node, child: Node): number {
-    return [].indexOf.call(parent.childNodes, child);
+    return Array.from<Node>(parent.childNodes).indexOf(child);
 }
 
 /**
