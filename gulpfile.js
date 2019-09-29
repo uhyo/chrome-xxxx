@@ -8,12 +8,8 @@ const gulpTSlint = require('gulp-tslint');
 const typescript = require('typescript');
 // Rollup
 const rollup = require('rollup');
-const rollupStream = require('rollup-stream');
 const rollupNode = require('rollup-plugin-node-resolve');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const uglifyComposer = require('gulp-uglify/composer');
-const uglifyEs = require('uglify-es');
+const { terser } = require('rollup-plugin-terser');
 const del = require('del');
 
 const LIB_DIR = "lib/";
@@ -65,7 +61,10 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
       // inputOptions
       input: path.join(TS_DIST_LIB, 'index.js'),
       cache: rollupCache,
-      plugins: [rollupNode()],
+      plugins: [
+        rollupNode(),
+        PRODUCTION && terser()
+      ],
     });
     await bundle.write({
       file: path.join(DIST_LIB, BUNDLE_NAME),
@@ -73,9 +72,6 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
       name: BUNDLE_MODULE_NAME,
       sourcemap: 'inline',
     });
-    // if (PRODUCTION){
-    //   main = main.pipe(buffer()).pipe(uglifyComposer(uglifyEs, console)());
-    // }
   }
   gulp.task('bundle-main', ()=>{
     return runRollup();
