@@ -60,29 +60,22 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 }
 {
   let rollupCache;
-  function runRollup(){
-    let main = rollupStream({
+  async function runRollup(){
+    const bundle = await rollup.rollup({
       // inputOptions
       input: path.join(TS_DIST_LIB, 'index.js'),
       cache: rollupCache,
-      // outputOptions
-      output: {
-        format: 'umd',
-        name: BUNDLE_MODULE_NAME,
-        sourcemap: 'inline',
-      },
       plugins: [rollupNode()],
-      // rollup-stream specific
-      rollup,
-    })
-    .on('bundle', bundle=> rollupCache = bundle)
-    .pipe(source(BUNDLE_NAME));
-
-    if (PRODUCTION){
-      main = main.pipe(buffer()).pipe(uglifyComposer(uglifyEs, console)());
-    }
-
-    return main.pipe(gulp.dest(DIST_LIB));
+    });
+    await bundle.write({
+      file: path.join(DIST_LIB, BUNDLE_NAME),
+      format: 'umd',
+      name: BUNDLE_MODULE_NAME,
+      sourcemap: 'inline',
+    });
+    // if (PRODUCTION){
+    //   main = main.pipe(buffer()).pipe(uglifyComposer(uglifyEs, console)());
+    // }
   }
   gulp.task('bundle-main', ()=>{
     return runRollup();
