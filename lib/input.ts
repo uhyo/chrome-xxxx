@@ -30,13 +30,53 @@ export function handleInput(
         }
         if (command === 'insert-anywhere' || isEndOf(range, target)) {
             // insert a text.
-            const text = document.createTextNode(genChar());
+            const ch = genChar();
             if (command === 'insert-anywhere') {
                 range.deleteContents();
             }
-            range.insertNode(text);
-            // Move cursor to the end.
-            range.collapse(false);
+            const keydown = new KeyboardEvent('keydown', { key: 'Process', bubbles: true, cancelable: true });
+
+            const compositionstart = new CompositionEvent(
+                'compositionstart',
+                { data: '', bubbles: true, cancelable: true });
+            const keydown2 = new KeyboardEvent('keydown', { key: 'Process', bubbles: true, cancelable: true });
+            const selectionchange = new Event('selectionchange', { bubbles: true, cancelable: true });
+            const compositionend = new CompositionEvent(
+                'compositionend',
+                { data: ch, bubbles: true, cancelable: true });
+            target.dispatchEvent(keydown);
+            target.dispatchEvent(compositionstart);
+            const parentNode = range.startContainer!;
+            const childNodes = parentNode.childNodes;
+            if (parentNode.nodeType === Node.TEXT_NODE) {
+                let text = parentNode.textContent!;
+                const offset = range.startOffset;
+                text = `${text.slice(0, offset)}${ch}${text.slice(offset)}`;
+                parentNode.textContent = text;
+                range.setStart(parentNode, offset + 1);
+                range.setEnd(parentNode, offset + 1);
+            } else {
+                const emptyTextNode = document.createTextNode('');
+                // DraftJS has <br> at the end of an empty line.
+                if (childNodes[childNodes.length -1] && childNodes[childNodes.length -1].nodeName === 'BR') {
+                    parentNode.insertBefore(emptyTextNode, childNodes[childNodes.length -1]);
+                } else {
+                    parentNode.appendChild(emptyTextNode);
+                }
+                /**
+                 * DraftJS uses MutationObserver and it observes "characterData" changes.
+                 * https://github.com/facebook/draft-js/blob/master/src/component/handlers/composition/DOMObserver.js
+                 */
+                emptyTextNode.textContent = ch;
+                range.setStartAfter(emptyTextNode);
+                range.setEndAfter(emptyTextNode);
+            }
+            sel.removeAllRanges();
+            sel.addRange(range);
+            target.dispatchEvent(selectionchange);
+            target.dispatchEvent(compositionend);
+            target.dispatchEvent(keydown2);
+            target.dispatchEvent(selectionchange);
         }
     }
 }
