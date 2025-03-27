@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Easy ████ing",
   "version": "0.2.1",
   "description": "__MSG_description__",
@@ -7,12 +7,19 @@
   "icons": {
     "48": "icons/48x48.png"
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "all_frames": true,
-      "js": ["dist/bundle.js", "js/content.js"]
+      "js": [
+        "dist/bundle.js",
+        "js/content.js"
+      ]
     }
   ],
   "options_ui": {
@@ -20,7 +27,7 @@
     "open_in_tab": false
   },
   "default_locale": "ja",
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "easy-xxxxing@uhyohyo.net"
     }
